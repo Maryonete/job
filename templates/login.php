@@ -1,3 +1,8 @@
+<?php
+if (!empty($_SESSION['connecte'])) {
+    redirectTo('admin-dashboard');
+}
+?>
 <div class="row align-items-center g-lg-5 py-5">
     <div class="col-lg-7 text-center text-lg-start">
         <p class="col-lg-10 fs-4">
@@ -11,10 +16,10 @@
         </div>
         <form method="post">
             <div class="mb-3">
-                <input type="text" class="form-control" id="inputPseudo" name="username" placeholder="votre pseudo">
+                <input type="email" class="form-control" name="email" placeholder="votre email">
             </div>
             <div class="mb-3">
-                <input type="password" class="form-control" id="inputPassword" name="password" placeholder="votre mot de passe">
+                <input type="password" class="form-control" name="password" placeholder="votre mot de passe">
             </div>
             <div class="mb-3 text-center">
                 <button type="submit" class="btn btn-primary">Connexion</button>

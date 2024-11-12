@@ -1,22 +1,15 @@
 <?php
 
 use App\Auth;
-use App\Entity\Table;
-use App\QueryBuilder;
 use App\Exception\UserException;
-use App\Controller\AdminController;
-use App\Exception\ArticleException;
-use App\Repository\ArticleRepository;
-use App\Repository\CategorieRepository;
+use App\Repository\OffreRepo;
 
+require "../vendor/autoload.php";
 
-require_once "../templates/partials/_header.php";
-
-
-define('PER_PAGE', 12);
 // Initialisation du routeur
 $router = new AltoRouter();
 $router->setBasePath('');
+
 
 $router->map('GET', '/', function () {
     require_once "../templates/login.php";
@@ -24,28 +17,34 @@ $router->map('GET', '/', function () {
 $router->map('GET', '/logout', function () {
     require_once "../templates/logout.php";
 }, 'logout');
-// $router->map('GET', '/admin', function () {
-//     $listeArticle = ArticleRepository::findAll();
+$router->map('GET', '/admin', function () {
+    $offres = (new OffreRepo)->getAllOffres();
+    require_once "../templates/admin/dashboard.php";
+}, 'admin-dashboard');
+$router->map('GET', '/initBD', function () {
+    require_once "../templates/admin/initBD.php";
+}, 'admin-initBD');
 
-//     require_once "../templates/admin/dashboard.php";
-// }, 'admin-dashboard');
+require_once "../templates/partials/_header.php";
 // $router->map('GET', '/article/[i:id]', function ($id) {
 //     $article = ArticleRepository::findById($id);
 //     require_once "../templates/articles/view.php";
 // }, 'article_view');
 
-// $router->map('POST', '/login', function () {
-//     if (isset($_POST['username']) && isset($_POST['password'])) {
-//         try {
-//             $user = (new Auth())->login($_POST['username'], $_POST['password']);
-//             if ($user) {
-//                 redirectTo('admin-dashboard');
-//             }
-//         } catch (UserException $e) {
-//             $_SESSION['error'] = $e->getMessage();
-//         }
-//     }
-// }, 'login-submit');
+$router->map('POST', '/', function () {
+    if (isset($_POST['email']) && isset($_POST['password'])) {
+        try {
+            $user = (new Auth())->login($_POST['email'], $_POST['password']);
+
+            if ($user) {
+                redirectTo('admin-dashboard');
+            }
+        } catch (UserException $e) {
+            $_SESSION['error'] = $e->getMessage();
+            redirectTo('login');
+        }
+    }
+}, 'login-submit');
 // // ARTICLE
 // $router->map('GET', '/admin/articles/add', function () {
 //     $categories =  CategorieRepository::findAll();

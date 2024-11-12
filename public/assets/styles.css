@@ -1,3 +1,6 @@
+:root {
+  --bs-primary: purple;
+}
 .required::after {
   content: " *";
   color: red;

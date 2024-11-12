@@ -12,6 +12,9 @@ global $router;
 function generateUrl(string $routeName, array $params = []): string
 {
     global $router;
+    if ($router === null) {
+        throw new Exception("Router is not initialized");
+    }
     return $router->generate($routeName, $params);
 }
 

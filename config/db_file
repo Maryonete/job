@@ -1,4 +1,4 @@
-dbname=blog
+dbname=job
 host=localhost
 password=
 user=root

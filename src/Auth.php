@@ -8,11 +8,11 @@ use App\Exception\UserException;
 
 class Auth
 {
-    public function login(string $username, string $password): ?User
+    public function login(string $email, string $password): ?User
     {
         $pdo = Database::getPDO();
-        $statement = $pdo->prepare("SELECT * FROM user WHERE username = :username");
-        $statement->execute(['username' => $username]);
+        $statement = $pdo->prepare("SELECT * FROM user WHERE email = :email");
+        $statement->execute(['email' => $email]);
         $user = $statement->fetchObject(User::class);
         if ($user === false) {
             throw new UserException('Identifiants invalides');
