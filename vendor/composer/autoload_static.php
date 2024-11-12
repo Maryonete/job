@@ -9,6 +9,7 @@ class ComposerStaticInitb44e29933b58f6bf71e5f8561a067cde
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
+        '2d6013f358f2b06599cf18d76623f42d' => __DIR__ . '/../..' . '/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -17,9 +18,9 @@ class ComposerStaticInitb44e29933b58f6bf71e5f8561a067cde
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\VarDumper\\' => 28,
         ),
-        'M' => 
+        'A' => 
         array (
-            'Mauri\\Emploi\\' => 13,
+            'App\\' => 4,
         ),
     );
 
@@ -32,13 +33,14 @@ class ComposerStaticInitb44e29933b58f6bf71e5f8561a067cde
         array (
             0 => __DIR__ . '/..' . '/symfony/var-dumper',
         ),
-        'Mauri\\Emploi\\' => 
+        'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
     );
 
     public static $classMap = array (
+        'AltoRouter' => __DIR__ . '/..' . '/altorouter/altorouter/AltoRouter.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
