@@ -14,7 +14,6 @@ class Offre
     private ?string $description = null;
     private string $url;
     private ?string $contact = null;
-    private ?string $suivi = null;
     private ?string $reponse = null;
     private ?DateTime $reponse_at = null;
 
@@ -34,7 +33,7 @@ class Offre
         return $this->dateCandidature;
     }
 
-    public function setDateCandidature(DateTime $dateCandidature): self
+    public function setDateCandidature(?DateTime $dateCandidature): self
     {
         $this->dateCandidature = $dateCandidature;
         return $this;
@@ -104,17 +103,6 @@ class Offre
     public function setContact(string $contact): self
     {
         $this->contact = $contact;
-        return $this;
-    }
-
-    public function getSuivi(): ?string
-    {
-        return $this->suivi;
-    }
-
-    public function setSuivi(string $suivi): self
-    {
-        $this->suivi = $suivi;
         return $this;
     }
 

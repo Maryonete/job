@@ -28,16 +28,14 @@ while (!feof($fic)) {
         if ($date !== false) {
             $offreCSV[0] = $date->format('Y-m-d');
         } else {
-            echo "<br>La date n'est pas valide. $i : " .  $ligne;
             continue;
         }
-
-        $dateReponse = null;
-        if (!empty($offreCSV[7])) {
-            $dateReponse = DateTime::createFromFormat('d/m/Y', $offreCSV[7]);
-            if ($dateReponse === false) {
-                $dateReponse = null;
-            }
+        $offreCSV[7] = str_replace(["\r", "\n"], '', $offreCSV[7]);
+        $dateReponse = DateTime::createFromFormat('d/m/Y', $offreCSV[7]);
+        if ($dateReponse !== false) {
+            $dateReponse->format('Y-m-d');
+        } else {
+            $dateReponse = null;
         }
         $offre = new Offre();
         $offre->setDateCandidature($date)

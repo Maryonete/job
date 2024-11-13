@@ -25,7 +25,6 @@ CREATE TABLE offre (
     description TEXT,
     url VARCHAR(255),
     contact VARCHAR(100),
-    suivi TEXT,
     reponse TEXT,
     reponse_at DATE
 );

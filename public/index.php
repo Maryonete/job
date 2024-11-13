@@ -1,6 +1,7 @@
 <?php
 
 use App\Auth;
+use App\Entity\Offre;
 use App\Exception\UserException;
 use App\Repository\OffreRepo;
 
@@ -17,19 +18,45 @@ $router->map('GET', '/', function () {
 $router->map('GET', '/logout', function () {
     require_once "../templates/logout.php";
 }, 'logout');
-$router->map('GET', '/admin', function () {
-    $offres = (new OffreRepo)->getAllOffres();
-    require_once "../templates/admin/dashboard.php";
-}, 'admin-dashboard');
+
 $router->map('GET', '/initBD', function () {
     require_once "../templates/admin/initBD.php";
 }, 'admin-initBD');
 
+$router->map('GET', '/admin/[encours|refuse:etat]?', function ($etat = null) {
+    $offres = (new OffreRepo)->getAllOffres($etat);
+    require_once "../templates/admin/dashboard.php";
+}, 'admin-dashboard');
+
+
 require_once "../templates/partials/_header.php";
-// $router->map('GET', '/article/[i:id]', function ($id) {
-//     $article = ArticleRepository::findById($id);
-//     require_once "../templates/articles/view.php";
-// }, 'article_view');
+
+
+$router->map('GET', '/offre/add', function () {
+    require_once "../templates/admin/offre/edit.php";
+}, 'offre-add');
+
+
+$router->map('GET', '/offre/[i:id]', function ($id) {
+    $offre = OffreRepo::getOffreById($id);
+    require_once "../templates/admin/offre/edit.php";
+}, 'offre_edit');
+$router->map('GET', '/offre/delete/[i:id]', function ($id) {
+    OffreRepo::deleteOffreById($id);
+    redirectTo('admin-dashboard');
+}, 'offre_delete');
+
+$router->map('POST', '/offre/[i:id]?', function ($id = null) {
+    try {
+        OffreRepo::editOffre($_POST, $id);
+    } catch (Exception $e) {
+        $_SESSION['error'] = $e->getMessage();
+    } finally {
+        redirectTo('admin-dashboard');
+    }
+}, 'offre_edit_save');
+
+
 
 $router->map('POST', '/', function () {
     if (isset($_POST['email']) && isset($_POST['password'])) {
