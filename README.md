@@ -17,6 +17,7 @@ Ce projet est une application simple en PHP 8.2 pour gérer vos candidatures aux
 - **Bootstrap** (version la plus récente)
 - **MySQL**
 - **HTML/CSS** pour le front-end
+- **PHPUnit** pour les tests unitaires
 
 ## Prérequis
 
@@ -24,13 +25,14 @@ Ce projet est une application simple en PHP 8.2 pour gérer vos candidatures aux
 - Serveur web local (Apache, Nginx)
 - MySQL ou MariaDB
 - Composer (pour la gestion des dépendances)
+- PHPUnit pour les tests
 
 ## Installation
 
 1. Clonez le dépôt sur votre machine locale :
 
    ```bash
-   git clone https://github.com/votre_nom_utilisateur/gestion-candidatures.git
+   git clone https://github.com/Maryonete/job
    ```
 
 2. Accédez au dossier du projet :
@@ -72,6 +74,13 @@ Ce projet est une application simple en PHP 8.2 pour gérer vos candidatures aux
    ```bash
    http://localhost:8000
    ```
+
+## Exemple de connexion
+
+Vous pouvez utiliser les identifiants suivants pour vous connecter à l'application :
+
+    * Email : admin@test.com
+    * Mot de passe : test (mot de passe déjà haché dans le script d'initialisation)
 
 ## Utilisation
 
