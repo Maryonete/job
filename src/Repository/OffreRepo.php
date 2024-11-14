@@ -204,8 +204,10 @@ class OffreRepo extends Offre
     {
         $pdo = Database::getPDO();
         $query = "SELECT * FROM offre ";
-        $query .= !empty($etat) && $etat === "encours" ? " WHERE reponse <> 'NON' " : '';
+        $query .= !empty($etat) && $etat === "encours" ? " WHERE reponse = '' " : '';
         $query .= !empty($etat) && $etat === "refuse" ? " WHERE reponse = 'NON' " : '';
+        $query .= !empty($etat) && $etat === "attente" ? " WHERE reponse = 'ATT' " : '';
+
         $query .= "ORDER BY dateCandidature DESC";
         $statement = $pdo->prepare($query);
         $statement->execute();

@@ -76,6 +76,7 @@
             <select name="reponse">
                 <option value="">--</option>
                 <option value="NON" <?= !empty($offre) && $offre->getReponse() === 'NON' ? 'selected' : '' ?>>NON</option>
+                <option value="ATT">En attente</option>
                 <option value="cat">Pas encore arrive</option>
             </select>
 

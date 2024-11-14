@@ -1,8 +1,21 @@
 <h1 class="pb-2 border-bottom d-flex justify-content-between">
     <a href="../recap.xlsx" target="_blank" class="--bs-success"><i class="fa-solid fa-file-excel "></i></a>
-    <?php $count = count($offres); ?>
+    <?php
+    $count = count($offres);
+    $s =  $count > 1 ? 's' : '';
+    ?>
     Dashboard
-    <?= empty($etat) ? $count . " candidatures" : ($etat === 'refuse' ? $count . " candidatures refusées" : $count . " candidatures en cours") ?>
+    <?= $count ?>
+    <?php if (empty($etat)): ?>
+        candidature<?= $s ?>
+    <?php elseif ($etat === 'refuse'): ?>
+        candidature<?= $s ?> refusée<?= $s ?>
+    <?php elseif ($etat === 'attente'): ?>
+        candidature<?= $s ?> en attente
+    <?php else: ?>
+        candidature<?= $s ?> en cours
+    <?php endif ?>
+
     <a href="<?= generateUrl('offre-add') ?>"><i class="fas fa-plus"></i></a>
 </h1>
 
@@ -24,7 +37,7 @@
     <tbody>
         <?php foreach ($offres as $offre): ?>
             <?php $url = !empty($offre->getUrl()) ? "<a href={$offre->getUrl()} target='_blank'><i class='fa-solid fa-link'></i></a>" : "" ?>
-            <tr <?= $offre->getReponse() === 'NON' ? " class='table-dark'" : '' ?>>
+            <tr <?= $offre->getReponse() === 'NON' ? " class='table-dark'" : ($offre->getReponse() === 'ATT' ? " class='table-success'" : '') ?>>
                 <td><?= $offre->getId() ?></td>
                 <td><?= $offre->getDateCandidature()->format('d/m/Y') ?></td>
                 <td><?= $offre->getEntreprise() ?></td>

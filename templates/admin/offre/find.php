@@ -4,6 +4,7 @@
             <a href=<?= generateUrl('admin-dashboard') ?> class="btn btn-primary">Toutes les candidatures</a>
             <a href=<?= generateUrl('admin-dashboard', ['etat' => 'encours']) ?> class="btn btn-info">Candidatures en cours</a>
             <a href=<?= generateUrl('admin-dashboard', ['etat' => 'refuse']) ?> class="btn btn-danger">Candidatures refusées</a>
+            <a href=<?= generateUrl('admin-dashboard', ['etat' => 'attente']) ?> class="btn btn-success">Candidatures en attentes</a>
         </div>
         <div class="col-auto ms-auto">
             <input type="text" name="find" id="btnFind" placeholder="Rechercher entreprise, lieu, contact" class="form-control">
