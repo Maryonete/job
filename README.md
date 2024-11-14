@@ -79,8 +79,8 @@ Ce projet est une application simple en PHP 8.2 pour gérer vos candidatures aux
 
 Vous pouvez utiliser les identifiants suivants pour vous connecter à l'application :
 
-    * Email : **admin@job.com**
-    * Mot de passe : **!v?ENBDBw4PT** (mot de passe déjà haché dans le script d'initialisation)
+    * Email : admin@job.com
+    * Mot de passe : !v?ENBDBw4PT (mot de passe déjà haché dans le script d'initialisation)
 
 ## Utilisation
 
