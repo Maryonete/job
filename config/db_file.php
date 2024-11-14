@@ -1,4 +1,4 @@
-dbname=job
-host=localhost
-password=
+dbname=railway
+host=mysql.railway.internal
+password=BblJASvmxGsNpzZGsJeybyCkkhMjEcbv
 user=root
