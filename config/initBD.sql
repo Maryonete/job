@@ -5,7 +5,7 @@ CREATE DATABASE IF NOT EXISTS job;
 USE job;
 
 -- Créer la table 'user'
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
   `username` varchar(250) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ;
 
 -- Ajouter un utilisateur avec un mot de passe haché
-INSERT INTO `user` (`username`, `email`, `password`) 
+INSERT INTO `users` (`username`, `email`, `password`) 
 VALUES ('admin', 'admin@job.com', '$2y$10$Jh6L/yHFf5X3vSxsSont8.gaNvVHo0JpPT.6r68IeHlBj1BUsLy76');
 
 CREATE TABLE offre (

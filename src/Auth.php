@@ -11,7 +11,7 @@ class Auth
     public function login(string $email, string $password): ?User
     {
         $pdo = Database::getPDO();
-        $statement = $pdo->prepare("SELECT * FROM user WHERE email = :email");
+        $statement = $pdo->prepare("SELECT * FROM users WHERE email = :email");
         $statement->execute(['email' => $email]);
         $user = $statement->fetchObject(User::class);
         if ($user === false) {
