@@ -116,4 +116,18 @@ class Offre
         $this->reponse = $reponse;
         return $this;
     }
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'dateCandidature' => $this->dateCandidature,
+            'entreprise' => $this->entreprise,
+            'lieu' => $this->lieu,
+            'description' => $this->description,
+            'url' => $this->url,
+            'contact' => $this->contact,
+            'reponse' => $this->reponse,
+            'reponse_at' => $this->reponse_at,
+        ];
+    }
 }

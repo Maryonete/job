@@ -1,8 +1,3 @@
-<?php
-
-session_start();
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,7 +20,11 @@ session_start();
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
-                        <li><a href="<?= generateUrl('admin-initBD') ?>" class=" nav-link px-2 text-white">Init BD</a></li>
+                        <li>
+                            <a href="<?= generateUrl('admin-initBD') ?>"
+                                class=" nav-link px-2 text-white"
+                                onclick="if(confirm('Voules-vous vraiment réinitialiser la BD ? ')){return true;} else{return false;}">Init BD</a>
+                        </li>
                     </ul>
                     <div class="text-end">
                         <a href="/logout" class="btn btn-outline-light me-2">Déconnexion</a>

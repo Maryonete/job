@@ -24,20 +24,4 @@ class Auth
             throw new UserException('Identifiants invalides');
         }
     }
-    // public function user(): ?User
-    // {
-    //     if (!empty($_SESSION['connecte'])) {
-    //         $user = (new UserRepository())->findUserById($_SESSION['connecte']);
-    //     }
-    //     return $user ?? null;
-    // }
-
-    // public function requireRole(string ...$role): void
-    // {
-    //     $user = $this->user();
-    //     if (!in_array($user->getRole(), $role)) {
-    //         header('location : login.php');
-    //         exit;
-    //     }
-    // }
 }

@@ -1,7 +1,6 @@
 <?php
 
 use App\Auth;
-use App\Entity\Offre;
 use App\Exception\UserException;
 use App\Repository\OffreRepo;
 
@@ -10,7 +9,12 @@ require "../vendor/autoload.php";
 // Initialisation du routeur
 $router = new AltoRouter();
 $router->setBasePath('');
-
+$api = false;
+// Routes API
+$router->map('GET', '/api/admin/find/[*:q]', function ($q) {
+    $data = (new OffreRepo)->getAllOffresByKeyWord($q);
+    echo json_encode($data);
+}, 'api-find');
 
 $router->map('GET', '/', function () {
     require_once "../templates/login.php";
@@ -21,15 +25,13 @@ $router->map('GET', '/logout', function () {
 
 $router->map('GET', '/initBD', function () {
     require_once "../templates/admin/initBD.php";
+    redirectTo('admin-dashboard');
 }, 'admin-initBD');
 
 $router->map('GET', '/admin/[encours|refuse:etat]?', function ($etat = null) {
     $offres = (new OffreRepo)->getAllOffres($etat);
     require_once "../templates/admin/dashboard.php";
 }, 'admin-dashboard');
-
-
-require_once "../templates/partials/_header.php";
 
 
 $router->map('GET', '/offre/add', function () {
@@ -72,74 +74,36 @@ $router->map('POST', '/', function () {
         }
     }
 }, 'login-submit');
-// // ARTICLE
-// $router->map('GET', '/admin/articles/add', function () {
-//     $categories =  CategorieRepository::findAll();
-//     require_once "../templates/admin/edit.php";
-// }, 'articles-add-form');
-
-// $router->map('GET', '/admin/articles/update/[i:id]', function ($id) {
-//     $categories =  CategorieRepository::findAll();
-//     $article =  ArticleRepository::findById($id);
-//     require_once "../templates/admin/edit.php";
-// }, 'articles-update');
-
-
-// $router->map('GET', '/admin/articles/delete/[i:id]', function ($id) {
-//     ArticleRepository::delete($id);
-//     redirectTo('admin-dashboard');
-// }, 'article-delete');
-// // CATEGORIES
-// $router->map('GET', '/admin/categories', function () {
-//     $categories =  CategorieRepository::findAll();
-//     require_once "../templates/admin/categorie_list.php";
-// }, 'categorie-list');
-
-// $router->map('GET', '/admin/categories/add', function () {
-//     require_once "../templates/admin/categorie_edit.php";
-// }, 'categorie-add-form');
-
-
-
-// $router->map('POST', '/admin/articles/edit/[i:id]?', function ($id = null) use ($router) {
-//     try {
-//         $adminController = new AdminController();
-//         $adminController->editArticle($_POST, $id);
-//         $_SESSION['success'] = empty($id) ? "L'article a été ajouté avec succès !" : "L'article a été mis à jour avec succès !";
-//         // Redirection vers la liste des articles
-//         redirectTo('admin-dashboard');
-//     } catch (ArticleException $e) {
-//         $_SESSION['error'] = $e->getMessage();
-//         redirectTo('articles-add-form');
-//     }
-// }, 'article-edit-submit');
-// $router->map('POST', '/admin/categorie/edit/[i:id]?', function ($id = null) use ($router) {
-//     try {
-//         $adminController = new AdminController();
-//         $adminController->editCategorie($_POST, $id);
-//         $_SESSION['success'] = empty($id) ? "Categorie a été ajouté avec succès !" : "La catégorie a été mise à jour avec succès !";
-//         // Redirection vers la liste des articles
-//         redirectTo('admin-dashboard');
-//     } catch (ArticleException $e) {
-//         $_SESSION['error'] = $e->getMessage();
-//         redirectTo('categorie-add-form');
-//     }
-// }, 'categorie-edit-submit');
-
 
 // Gestion des routes
 $match = $router->match();
 
 
 
-
+$api = false;
 if ($match === false) {
     // Page non trouvée
     header('HTTP/1.0 404 Not Found');
     echo 'Page non trouvée';
 } else {
-    // Appel du handler correspondant
+    session_start();
+
+    // Vérification si la route correspond à une API
+    if ($match['name'] === 'api-find') {
+        // Autoriser les requêtes CORS si nécessaire
+        header('Access-Control-Allow-Origin: *');
+        header('Content-Type: application/json; charset=utf-8');
+        $api = true;
+    } else {
+        // Charger le header normal si ce n'est pas une API
+        require_once "../templates/partials/_header.php";
+    }
+
+    // Appel du handler correspondant à la route
     call_user_func_array($match['target'], $match['params']);
 }
 
-require_once "../templates/partials/_footer.php";
+if ($api === false) {
+
+    require_once "../templates/partials/_footer.php";
+}

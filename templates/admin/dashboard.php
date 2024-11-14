@@ -5,10 +5,7 @@
     <a href="<?= generateUrl('offre-add') ?>"><i class="fas fa-plus"></i></a>
 </h1>
 
-<a href=<?= generateUrl('admin-dashboard') ?> class="btn btn-primary">Toutes les candidatures</a>
-<a href=<?= generateUrl('admin-dashboard', ['etat' => 'encours']) ?> class="btn btn-info">Candidatures en cours</a>
-<a href=<?= generateUrl('admin-dashboard', ['etat' => 'refuse']) ?> class="btn btn-danger">Candidatures refusées</a>
-
+<?php require "../templates/admin/offre/find.php"; ?>
 <table class="table table-striped sortable">
     <thead>
         <tr>
@@ -32,8 +29,6 @@
                 <td><?= $offre->getEntreprise() ?></td>
                 <td><?= $offre->getLieu() ?></td>
                 <td><?= $offre->getDescription() ?></td>
-
-
                 <td><?= $url ?></td>
                 <td><?= $offre->getContact() ?></td>
                 <td><?= $offre->getReponse() ?></td>
@@ -42,7 +37,9 @@
                         <i class="fa-solid fa-pen"></i>
                     </a>
                 </td>
-                <td><a href="<?= generateUrl('offre_delete', ['id' => $offre->getId()]) ?>" title="Delete">
+                <td><a href="<?= generateUrl('offre_delete', ['id' => $offre->getId()]) ?>"
+                        title="Delete"
+                        onclick="if(confirm('Voules-vous vraiment supprimer cette candidature ? ')){return true;} else{return false;}">
                         <i class="fa-solid fa-trash"></i>
                     </a>
                 </td>

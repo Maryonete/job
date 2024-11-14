@@ -104,6 +104,25 @@ class OffreRepo extends Offre
         }
         return $offre;
     }
+    public function getAllOffresByKeyWord(string $q): array
+    {
+        $pdo = Database::getPDO();
+        $query = "SELECT id FROM offre 
+            where entreprise like :key
+            or lieu like :key
+            or contact like :key";
+
+        $statement = $pdo->prepare($query);
+        $keyword = "%$q%";
+        $statement->bindParam('key', $keyword, PDO::PARAM_STR);
+        $statement->execute();
+        $listOffres =  $statement->fetchAll();
+        $offres = [];
+        foreach ($listOffres as $offre) {
+            $offres[] = $this->getOffreById($offre['id'])->jsonSerialize();
+        }
+        return $offres;
+    }
     public function getAllOffres(?string $etat = null): array
     {
         $pdo = Database::getPDO();
