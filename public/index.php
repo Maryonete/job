@@ -29,7 +29,9 @@ $router->map('GET', '/initBD', function () {
 }, 'admin-initBD');
 
 $router->map('GET', '/admin/[encours|refuse:etat]?', function ($etat = null) {
-    $offres = (new OffreRepo)->getAllOffres($etat);
+    $offreRepro = new OffreRepo;
+    $offres = $offreRepro->getAllOffres($etat);
+    $offreRepro->getAllOffresXLS();
     require_once "../templates/admin/dashboard.php";
 }, 'admin-dashboard');
 
@@ -39,7 +41,7 @@ $router->map('GET', '/offre/add', function () {
 }, 'offre-add');
 
 
-$router->map('GET', '/offre/[i:id]', function ($id) {
+$router->map('GET', '/offre/edit/[i:id]', function ($id) {
     $offre = OffreRepo::getOffreById($id);
     require_once "../templates/admin/offre/edit.php";
 }, 'offre_edit');

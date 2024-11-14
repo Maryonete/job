@@ -7,9 +7,16 @@ use DateTime;
 use App\Entity\Offre;
 use App\Entity\Database;
 use App\Exception\OffreException;
+use XLSXWriter;
 
 class OffreRepo extends Offre
 {
+    /**
+     * Supression d'une candidature par son id
+     *
+     * @param integer $id
+     * @return void
+     */
     public static function deleteOffreById(int $id): void
     {
         try {
@@ -21,6 +28,13 @@ class OffreRepo extends Offre
             $_SESSION['error'] = "Erreur suppression offre {$id}";
         }
     }
+    /**
+     * Edition d'une offre par son id
+     *
+     * @param array $post
+     * @param integer|null $id
+     * @return Offre
+     */
     public static function editOffre(array $post, ?int $id = null): Offre
     {
         $offre = empty($id) ? new Offre : OffreRepo::getOffreById($id);
@@ -51,7 +65,12 @@ class OffreRepo extends Offre
         );
         return self::save($offre);
     }
-
+    /**
+     * Enregistre une nouvelle candidature
+     *
+     * @param Offre $offre
+     * @return Offre
+     */
     public static function save(Offre $offre): Offre
     {
         $pdo = Database::getPDO();
@@ -104,6 +123,12 @@ class OffreRepo extends Offre
         }
         return $offre;
     }
+    /**
+     * retourne liste d'offre en fonction d'une recherche
+     *
+     * @param string $q
+     * @return array
+     */
     public function getAllOffresByKeyWord(string $q): array
     {
         $pdo = Database::getPDO();
@@ -123,6 +148,58 @@ class OffreRepo extends Offre
         }
         return $offres;
     }
+    public function getAllOffresXLS(): void
+    {
+        $pdo = Database::getPDO();
+        $query = "SELECT * FROM offre ";
+        $statement = $pdo->prepare($query);
+        $statement->execute();
+
+
+        // HEADER
+        $header = array(
+            'date' => 'string',
+            'entreprise' => 'string',
+            'description' => 'string',
+            'lieu' => 'string',
+            'url' => 'string',
+            'contact' => 'string',
+            'reponse' => 'string',
+            'reponse_at' => 'string',
+        );
+        $styles1 = array('font' => 'Arial', 'font-size' => 10, 'font-style' => 'bold', 'fill' => '#eee', 'halign' => 'center', 'border' => 'left,right,top,bottom');
+        $datas = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        $writer = new XLSXWriter();
+        $writer->writeSheetHeader('Sheet1', $header, $styles1);
+
+        foreach ($datas as $data) {
+            $dateCand = DateTime::createFromFormat('Y-m-d', $data['dateCandidature']);
+            $formattedDate = $dateCand->format('d/m/Y');
+
+            $dateReponse = DateTime::createFromFormat('Y-m-d', $data['reponse_at']);
+            $formattedDateReponse = $dateReponse !== false ? $dateReponse->format('d/m/Y') : '';
+
+            $offres[] = [
+                'date' => $formattedDate,
+                'entreprise' => $data['entreprise'],
+                'description' => $data['description'],
+                'lieu' => $data['lieu'],
+                'url' => $data['url'],
+                'contact' => $data['contact'],
+                'reponse' => $data['reponse'],
+                'reponse_at' => $formattedDateReponse,
+            ];
+        }
+        $writer->writeSheet($offres);
+        $writer->writeToFile('recap.xlsx');
+    }
+    /**
+     * retourne la liste de toutes les candidatures
+     *
+     * @param string|null $etat
+     * @return array
+     */
     public function getAllOffres(?string $etat = null): array
     {
         $pdo = Database::getPDO();
@@ -156,6 +233,12 @@ class OffreRepo extends Offre
 
         return $offres;
     }
+    /**
+     * retourne lune candidature en focntion de son id
+     *
+     * @param integer $id
+     * @return Offre
+     */
     public static function getOffreById(int $id): Offre
     {
         $pdo = Database::getPDO();
