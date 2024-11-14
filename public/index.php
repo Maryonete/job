@@ -10,6 +10,9 @@ require "../vendor/autoload.php";
 $router = new AltoRouter();
 $router->setBasePath('');
 $api = false;
+
+// echo (password_hash("!v?ENBDBw4PT", PASSWORD_DEFAULT));
+
 // Routes API
 $router->map('GET', '/api/admin/find/[*:q]', function ($q) {
     $data = (new OffreRepo)->getAllOffresByKeyWord($q);

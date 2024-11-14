@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 -- Ajouter un utilisateur avec un mot de passe haché
 INSERT INTO `user` (`username`, `email`, `password`) 
-VALUES ('admin', 'admin@test.com', '$2y$10$Jh6L/yHFf5X3vSxsSont8.gaNvVHo0JpPT.6r68IeHlBj1BUsLy76');
+VALUES ('admin', 'admin@job.com', '$2y$10$Jh6L/yHFf5X3vSxsSont8.gaNvVHo0JpPT.6r68IeHlBj1BUsLy76');
 
 CREATE TABLE offre (
     id INT AUTO_INCREMENT PRIMARY KEY,
