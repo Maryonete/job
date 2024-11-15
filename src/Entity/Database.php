@@ -35,6 +35,12 @@ class Database
                 $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__, 2));
                 $dotenv->load();
             }
+            echo getenv('MYSQLHOST');
+            echo getenv('MYSQL_DATABASE');
+            echo getenv('MYSQLUSER');
+            echo getenv('MYSQLPASSWORD');
+            echo getenv('MYSQLPORT');
+
             try {
                 $host = $_ENV['MYSQLHOST'] ?? getenv('MYSQLHOST');
                 $db   = $_ENV['MYSQL_DATABASE'] ?? getenv('MYSQL_DATABASE');
