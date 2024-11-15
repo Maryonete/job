@@ -172,7 +172,7 @@ class OffreRepo extends Offre
 
         $writer = new XLSXWriter();
         $writer->writeSheetHeader('Sheet1', $header, $styles1);
-
+        $offres = [];
         foreach ($datas as $data) {
             $dateCand = DateTime::createFromFormat('Y-m-d', $data['dateCandidature']);
             $formattedDate = $dateCand->format('d/m/Y');
