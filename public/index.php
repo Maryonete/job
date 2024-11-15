@@ -7,9 +7,11 @@ use App\Repository\OffreRepo;
 require "../vendor/autoload.php";
 
 
-// Chargement des variables d'environnement
-$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
-$dotenv->load();
+// Charger .env seulement en local
+if (file_exists(dirname(__DIR__) . '/.env')) {
+    $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+    $dotenv->load();
+}
 
 // Initialisation du routeur
 $router = new AltoRouter();
