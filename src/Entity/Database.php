@@ -31,13 +31,25 @@ class Database
     {
 
         if (self::$instance === null) {
-            $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
-            $dotenv->load();
+            // Charger les variables d'environnement localement uniquement
+            if (file_exists(__DIR__ . '/../../.env')) {
+                $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+                $dotenv->load();
+            }
 
-            $dbHost = $_ENV['DB_HOST'] ?? 'localhost';
-            $dbName = $_ENV['DB_NAME'] ?? 'job';
-            $dbUser = $_ENV['DB_USER'] ?? 'root';
-            $dbPassword = $_ENV['DB_PASSWORD'] ?? '';
+            // Utiliser les variables d'environnement
+            $dbHost = $_ENV['DB_HOST'] ?? getenv('DB_HOST') ?? 'localhost';
+            $dbName = $_ENV['DB_NAME'] ?? getenv('DB_NAME') ?? 'job';
+            $dbUser = $_ENV['DB_USER'] ?? getenv('DB_USER') ?? 'root';
+            $dbPassword = $_ENV['DB_PASSWORD'] ?? getenv('DB_PASSWORD') ?? '';
+
+            try {
+                $dsn = "mysql:host=$dbHost;dbname=$dbName;charset=utf8";
+                $pdo = new PDO($dsn, $dbUser, $dbPassword);
+            } catch (PDOException $e) {
+                die('Erreur : ' . $e->getMessage());
+            }
+
 
             try {
                 $dsn = "mysql:host=$dbHost;dbname=$dbName;charset=utf8";
