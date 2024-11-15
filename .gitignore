@@ -1,4 +1,9 @@
 *.xlsx
+
+# Fichiers de configuration locaux
+/config/config.local.php
+/config/config.live.php
+
 # Created by https://www.toptal.com/developers/gitignore/api/phpunit,composer,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=phpunit,composer,visualstudiocode
 

@@ -48,21 +48,48 @@ Ce projet est une application simple en PHP 8.2 pour gérer vos candidatures aux
    ```
 
 4. Configuration de la base de données :
-   Créez un fichier config/config.php avec les informations suivantes :
+
+   1. Créer le fichier de configuration local :
+
+   Copiez le fichier config/config.example.php et renommez-le en config/config.local.php. Ce fichier ne sera pas suivi par Git pour protéger vos informations sensibles.
 
    ```bash
-   ; Fichier config.php
-   dbname=job
-   host=localhost
-   user=root
-   password=
+   cp config/config.example.php config/config.local.php
    ```
 
-   Initialisez la base de données avec le script config/initDB.sql :
+   2. Modifiez le fichier config/config.local.php avec les informations de votre base de données :
+
+      ```bash
+      ; Fichier config.local.php
+      dbname=job
+      host=localhost
+      user=root
+      password=
+      ```
+
+   3. Ajoutez le fichier config.local.php à .gitignore pour éviter qu'il ne soit versionné :
+
+   Dans le fichier .gitignore, ajoutez :
 
    ```bash
-   mysql -u root -p < config/initDB.sql
+   # Fichier de configuration local
+   /config/config.local.php
    ```
+
+   4. Initialisez la base de données avec le script SQL config/initDB.sql :
+
+      ```bash
+      mysql -u root -p < config/initDB.sql
+      ```
+
+   5. Utilisez un fichier d'exemple pour les autres développeurs : Le fichier config/config.example.php est inclus dans le dépôt et doit contenir une structure de base sans informations sensibles.
+      ```bash
+      ; Fichier config.example.php
+      dbname=
+      host=
+      user=
+      password=
+      ```
 
 5. Lancer le serveur PHP local sur le dossier /public :
 
