@@ -31,24 +31,30 @@ class Database
     {
 
         if (self::$instance === null) {
-            // Charger les variables d'environnement localement uniquement
+            // Charger les variables d'environnement si le fichier .env existe (en local)
             if (file_exists(__DIR__ . '/../../.env')) {
                 $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
                 $dotenv->load();
             }
 
-            // Utiliser les variables d'environnement
-            $dbHost = $_ENV['DB_HOST'] ?? getenv('DB_HOST') ?? 'localhost';
-            $dbName = $_ENV['DB_NAME'] ?? getenv('DB_NAME') ?? 'job';
-            $dbUser = $_ENV['DB_USER'] ?? getenv('DB_USER') ?? 'root';
-            $dbPassword = $_ENV['DB_PASSWORD'] ?? getenv('DB_PASSWORD') ?? '';
+            // Récupération des variables d'environnement
+            $dbHost = $_ENV['MYSQLHOST'] ?? getenv('MYSQLHOST') ?? '127.0.0.1';
+            $dbPort = $_ENV['MYSQLPORT'] ?? getenv('MYSQLPORT') ?? '3306';
+            $dbName = $_ENV['MYSQLDATABASE'] ?? getenv('MYSQLDATABASE') ?? 'job';
+            $dbUser = $_ENV['MYSQLUSER'] ?? getenv('MYSQLUSER') ?? 'root';
+            $dbPassword = $_ENV['MYSQLPASSWORD'] ?? getenv('MYSQLPASSWORD') ?? '';
 
+            // Création de la connexion PDO
             try {
-                $dsn = "mysql:host=$dbHost;dbname=$dbName;charset=utf8";
-                $pdo = new PDO($dsn, $dbUser, $dbPassword);
+                $dsn = "mysql:host=$dbHost;port=$dbPort;dbname=$dbName;charset=utf8";
+                $pdo = new PDO($dsn, $dbUser, $dbPassword, [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                ]);
             } catch (PDOException $e) {
-                die('Erreur : ' . $e->getMessage());
+                die('Erreur de connexion : ' . $e->getMessage());
             }
+
 
 
             try {
