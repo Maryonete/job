@@ -1,3 +1,6 @@
+<?php
+ob_start(); // Commence à tamponner la sortie
+?>
 <!DOCTYPE html>
 <html lang="en">
 
