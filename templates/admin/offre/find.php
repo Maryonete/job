@@ -1,16 +1,21 @@
 <form action="" method="post">
-    <div class="row g-3 align-items-center my-5">
-        <div class="col-auto">
-            <a href=<?= generateUrl('admin-dashboard') ?> class="btn btn-primary">Toutes les candidatures</a>
-            <a href=<?= generateUrl('admin-dashboard', ['etat' => 'encours']) ?> class="btn btn-info">Candidatures en cours</a>
-            <a href=<?= generateUrl('admin-dashboard', ['etat' => 'refuse']) ?> class="btn btn-danger">Candidatures refusées</a>
-            <a href=<?= generateUrl('admin-dashboard', ['etat' => 'attente']) ?> class="btn btn-success">Candidatures en attentes</a>
+    <div class="row g-3 align-items-center mb-5">
+        <!-- Colonne contenant les boutons -->
+        <div class="col-12 col-md-8 d-flex flex-column flex-md-row justify-content-between">
+            <a href="<?= generateUrl('admin-dashboard') ?>" class="btn btn-primary mb-2 mb-md-0 w-100 w-md-auto me-md-2">Toutes les candidatures</a>
+            <a href="<?= generateUrl('admin-dashboard', ['etat' => 'encours']) ?>" class="btn btn-info mb-2 mb-md-0 w-100 w-md-auto me-md-2">Candidatures en cours</a>
+            <a href="<?= generateUrl('admin-dashboard', ['etat' => 'refuse']) ?>" class="btn btn-danger mb-2 mb-md-0 w-100 w-md-auto me-md-2">Candidatures refusées</a>
+            <a href="<?= generateUrl('admin-dashboard', ['etat' => 'attente']) ?>" class="btn btn-success mb-2 mb-md-0 w-100 w-md-auto me-md-2">Candidatures en attente</a>
         </div>
-        <div class="col-auto ms-auto">
+
+        <!-- Colonne pour le champ de recherche -->
+        <div class="col-12 col-md-4">
             <input type="text" name="find" id="btnFind" placeholder="Rechercher entreprise, lieu, contact" class="form-control">
         </div>
     </div>
 </form>
+
+
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {

@@ -4,7 +4,7 @@ if (empty($_SESSION['connecte'])) {
 }
 ?>
 <h1 class="pb-2 border-bottom d-flex justify-content-between">
-    <a href="../recap.xlsx" target="_blank" class="--bs-success"><i class="fa-solid fa-file-excel "></i></a>
+    <a href="../recap.xlsx" target="_blank" class="--bs-success mx-4"><i class="fa-solid fa-file-excel "></i></a>
     <?php
     $count = count($offres);
     $s =  $count > 1 ? 's' : '';
