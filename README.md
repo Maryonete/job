@@ -61,7 +61,7 @@ composer install
 3. **Configuration de l'environnement**
 
 ```bash
-cp config/config.example.php config/config.local.php
+cp .env.example .env
 ```
 
 4. **Initialisation de la base de données**
@@ -78,17 +78,18 @@ php -S localhost:8000 -t public
 
 ## ⚙️ Configuration
 
-### Base de données
+### Variables d'environnement
 
-Modifiez le fichier `config/config.local.php` avec vos paramètres :
+Créez un fichier `.env` à la racine du projet et configurez les variables suivantes :
 
-```php
-; Configuration de la base de données
-dbname = "job"
-host = "localhost"
-user = "votre_utilisateur"
-password = "votre_mot_de_passe"
+```env
+DB_HOST=nom_du_serveur
+DB_NAME=nom_de_la_base_de_donnees
+DB_USER=utilisateur_de_la_base
+DB_PASSWORD=mot_de_passe_de_la_base
 ```
+
+> **Note** : Le fichier `.env` est ignoré par Git pour protéger vos informations sensibles. Un fichier `.env.example` est fourni comme modèle.
 
 ### Accès par défaut
 
@@ -97,7 +98,7 @@ password = "votre_mot_de_passe"
 
 ## 🚀 Utilisation
 
-1. Accédez à `http://localhost:8000`
+1. Accédez à l'URL de votre application
 2. Connectez-vous avec les identifiants par défaut
 3. Commencez à gérer vos candidatures :
    - Créez de nouvelles offres

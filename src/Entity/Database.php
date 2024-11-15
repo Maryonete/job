@@ -3,13 +3,11 @@
 namespace App\Entity;
 
 use PDO;
+use Dotenv\Dotenv;
+use PDOException;
 
 class Database
 {
-    const DB_FILE = "../config/db_file.php";
-
-
-
     /**
      * @var PDO|null Instance unique de PDO
      */
@@ -33,17 +31,21 @@ class Database
     {
 
         if (self::$instance === null) {
-            // Détecter l'environnement (local ou production)
-            if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') {
-                // Environnement local
-                $config = require __DIR__ . '/../../config/config.local.php';
-            } else {
-                // Environnement live
-                $config = require __DIR__ . '/../../config/config.live.php';
-            }
+            $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+            $dotenv->load();
 
-            $dsn = "mysql:host={$config['db_host']};dbname={$config['db_name']};charset=utf8";
-            self::$instance = new PDO($dsn, $config['db_user'], $config['db_password'], [
+            $dbHost = $_ENV['DB_HOST'] ?? 'localhost';
+            $dbName = $_ENV['DB_NAME'] ?? 'job';
+            $dbUser = $_ENV['DB_USER'] ?? 'root';
+            $dbPassword = $_ENV['DB_PASSWORD'] ?? '';
+
+            try {
+                $dsn = "mysql:host=$dbHost;dbname=$dbName;charset=utf8";
+                $pdo = new PDO($dsn, $dbUser, $dbPassword);
+            } catch (PDOException $e) {
+                die('Erreur : ' . $e->getMessage());
+            }
+            self::$instance = new PDO($dsn, $dbUser, $dbPassword, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             ]);
