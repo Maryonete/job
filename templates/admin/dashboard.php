@@ -1,3 +1,8 @@
+<?php
+if (empty($_SESSION['connecte'])) {
+    redirectTo('login');
+}
+?>
 <h1 class="pb-2 border-bottom d-flex justify-content-between">
     <a href="../recap.xlsx" target="_blank" class="--bs-success"><i class="fa-solid fa-file-excel "></i></a>
     <?php
