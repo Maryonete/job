@@ -80,16 +80,37 @@ php -S localhost:8000 -t public
 
 ### Variables d'environnement
 
-Créez un fichier `.env` à la racine du projet et configurez les variables suivantes :
+1. Créez un fichier `.env` à la racine du projet :
 
 ```env
-DB_HOST=nom_du_serveur
-DB_NAME=nom_de_la_base_de_donnees
-DB_USER=utilisateur_de_la_base
-DB_PASSWORD=mot_de_passe_de_la_base
+# Configuration de la base de données
+MYSQLHOST=localhost
+MYSQLDATABASE=job
+MYSQLUSER=root
+MYSQLPASSWORD=
+MYSQLPORT=3306
 ```
 
+2. Pour le développement local, ces valeurs par défaut devraient convenir. Pour la production, assurez-vous de :
+   - Utiliser des identifiants sécurisés
+   - Ne jamais commiter le fichier `.env`
+   - Configurer les variables directement sur votre serveur de production
+
 > **Note** : Le fichier `.env` est ignoré par Git pour protéger vos informations sensibles. Un fichier `.env.example` est fourni comme modèle.
+
+### Déploiement sur Railway
+
+Pour déployer l'application sur Railway :
+
+1. Créez un projet sur Railway
+2. Configurez les variables d'environnement dans les paramètres du projet :
+   - `MYSQLHOST`
+   - `MYSQLDATABASE`
+   - `MYSQLUSER`
+   - `MYSQLPASSWORD`
+   - `MYSQLPORT`
+3. Connectez votre dépôt GitHub
+4. Railway déploiera automatiquement votre application
 
 ### Accès par défaut
 
