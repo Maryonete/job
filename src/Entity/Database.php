@@ -30,23 +30,25 @@ class Database
     public static function getPDO(): PDO
     {
         if (self::$instance === null) {
+            // Charger les variables d'environnement
+            if (file_exists(dirname(__DIR__, 2) . '/.env')) {
+                $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__, 2));
+                $dotenv->load();
+            }
             try {
-                // Récupérer les variables d'environnement (soit de .env en local, soit de Railway en prod)
-                $host = $_SERVER['MYSQLHOST'] ?? $_ENV['MYSQLHOST'] ?? getenv('MYSQLHOST');
-                $db   = $_SERVER['MYSQLDATABASE'] ?? $_ENV['MYSQLDATABASE'] ?? getenv('MYSQLDATABASE');
-                $user = $_SERVER['MYSQLUSER'] ?? $_ENV['MYSQLUSER'] ?? getenv('MYSQLUSER');
-                $pass = $_SERVER['MYSQLPASSWORD'] ?? $_ENV['MYSQLPASSWORD'] ?? getenv('MYSQLPASSWORD');
-                $port = $_SERVER['MYSQLPORT'] ?? $_ENV['MYSQLPORT'] ?? getenv('MYSQLPORT') ?? '3306';
+                $host = $_ENV['MYSQLHOST'] ?? getenv('MYSQLHOST');
+                $db   = $_ENV['MYSQL_DATABASE'] ?? getenv('MYSQL_DATABASE');
+                $user = $_ENV['MYSQLUSER'] ?? getenv('MYSQLUSER');
+                $pass = $_ENV['MYSQLPASSWORD'] ?? getenv('MYSQLPASSWORD');
+                $port = $_ENV['MYSQLPORT'] ?? getenv('MYSQLPORT');
 
                 // Vérification des variables requises
                 if (!$host || !$db || !$user) {
-                    throw new \RuntimeException('Configuration de base de données manquante.');
+                    throw new \RuntimeException('Configuration de base de données manquante. Vérifiez votre fichier .env');
                 }
 
-                // Construction du DSN
                 $dsn = "mysql:host={$host};port={$port};dbname={$db};charset=utf8mb4";
 
-                // Création de l'instance PDO
                 self::$instance = new PDO(
                     $dsn,
                     $user,
@@ -58,27 +60,11 @@ class Database
                     ]
                 );
             } catch (\PDOException $e) {
-                // Log l'erreur de manière sécurisée (ne pas exposer les détails en production)
-                error_log("Erreur de connexion à la base de données : " . $e->getMessage());
-                throw new \RuntimeException("Impossible de se connecter à la base de données. Veuillez contacter l'administrateur.");
+                throw new \RuntimeException("Erreur de connexion : " . $e->getMessage());
             }
         }
 
         return self::$instance;
-    }
-
-    // Méthode utile pour le débogage (à utiliser uniquement en développement)
-    public static function debugEnvironment(): void
-    {
-        if ($_ENV['APP_ENV'] ?? getenv('APP_ENV') === 'development') {
-            echo "<pre>";
-            echo "Variables d'environnement de la base de données :\n";
-            echo "MYSQLHOST: " . ($_SERVER['MYSQLHOST'] ?? $_ENV['MYSQLHOST'] ?? getenv('MYSQLHOST') ?? 'non défini') . "\n";
-            echo "MYSQLDATABASE: " . ($_SERVER['MYSQLDATABASE'] ?? $_ENV['MYSQLDATABASE'] ?? getenv('MYSQLDATABASE') ?? 'non défini') . "\n";
-            echo "MYSQLUSER: " . ($_SERVER['MYSQLUSER'] ?? $_ENV['MYSQLUSER'] ?? getenv('MYSQLUSER') ?? 'non défini') . "\n";
-            echo "MYSQLPORT: " . ($_SERVER['MYSQLPORT'] ?? $_ENV['MYSQLPORT'] ?? getenv('MYSQLPORT') ?? 'non défini') . "\n";
-            echo "</pre>";
-        }
     }
     public static function setPDO(PDO $pdo): void
     {
