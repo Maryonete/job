@@ -1,127 +1,143 @@
-# Gestion des Candidatures aux offres d'emploi
+# Gestion des Candidatures aux Offres d'Emploi
 
-Ce projet est une application simple en PHP 8.2 pour gérer vos candidatures aux offres d'emploi. Il permet d'ajouter, de modifier et de supprimer des offres, ainsi que de suivre l'état de vos candidatures.
+[![PHP Version](https://img.shields.io/badge/PHP-8.2-blue.svg)](https://www.php.net)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## Fonctionnalités
+Une application PHP moderne pour la gestion efficace de vos candidatures aux offres d'emploi. Cette solution permet de suivre, organiser et gérer professionnellement votre recherche d'emploi.
 
-- Ajout d'une nouvelle offre d'emploi
-- Modification des offres existantes
-- Suppression des offres
-- Gestion des candidatures (statut : en cours, refusée, acceptée)
-- Interface utilisateur avec Bootstrap pour un design simple et responsive
-- Connexion à une base de données MySQL pour stocker les informations des offres et des candidatures
+## 📑 Table des matières
 
-## Technologies utilisées
+- [Fonctionnalités](#fonctionnalités)
+- [Prérequis](#prérequis)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Utilisation](#utilisation)
+- [Tests](#tests)
+- [Feuille de route](#feuille-de-route)
+- [Contribution](#contribution)
+- [Licence](#licence)
 
-- **PHP** 8.2
-- **Bootstrap** (version la plus récente)
-- **MySQL**
-- **HTML/CSS** pour le front-end
-- **PHPUnit** pour les tests unitaires
+## ✨ Fonctionnalités
 
-## Prérequis
+- **Gestion complète des offres d'emploi**
+  - Création, modification et suppression d'offres
+  - Suivi détaillé des candidatures
+  - Statuts personnalisables (en cours, refusée, acceptée)
+- **Interface moderne et responsive**
+  - Design épuré avec Bootstrap
+  - Navigation intuitive
+  - Compatible tous supports
+- **Sécurité renforcée**
+  - Authentification utilisateur
+  - Protection des données sensibles
+  - Validation des entrées
 
-- PHP 8.2 installé sur votre machine
-- Serveur web local (Apache, Nginx)
-- MySQL ou MariaDB
-- Composer (pour la gestion des dépendances)
-- PHPUnit pour les tests
+## 🔧 Prérequis
 
-## Installation
+- PHP 8.2 ou supérieur
+- Serveur web (Apache/Nginx)
+- MySQL 5.7+ ou MariaDB 10.3+
+- Composer
+- Extension PHP requises :
+  - PDO PHP Extension
+  - MySQL PHP Extension
+  - PHP-XML
 
-1. Clonez le dépôt sur votre machine locale :
+## 📦 Installation
 
-   ```bash
-   git clone https://github.com/Maryonete/job
-   ```
+1. **Clonage du dépôt**
 
-2. Accédez au dossier du projet :
+```bash
+git clone https://github.com/Maryonete/job
+cd gestion-candidatures
+```
 
-   ```bash
-    cd gestion-candidatures
-   ```
+2. **Installation des dépendances**
 
-3. Installez les dépendances :
+```bash
+composer install
+```
 
-   ```bash
-   composer install
-   ```
+3. **Configuration de l'environnement**
 
-4. Configuration de la base de données :
+```bash
+cp config/config.example.php config/config.local.php
+```
 
-   1. Créer le fichier de configuration local :
+4. **Initialisation de la base de données**
 
-   Copiez le fichier config/config.example.php et renommez-le en config/config.local.php. Ce fichier ne sera pas suivi par Git pour protéger vos informations sensibles.
+```bash
+mysql -u root -p < config/initDB.sql
+```
 
-   ```bash
-   cp config/config.example.php config/config.local.php
-   ```
+5. **Démarrage du serveur de développement**
 
-   2. Modifiez le fichier config/config.local.php avec les informations de votre base de données :
+```bash
+php -S localhost:8000 -t public
+```
 
-      ```bash
-      ; Fichier config.local.php
-      dbname=job
-      host=localhost
-      user=root
-      password=
-      ```
+## ⚙️ Configuration
 
-   3. Ajoutez le fichier config.local.php à .gitignore pour éviter qu'il ne soit versionné :
+### Base de données
 
-   Dans le fichier .gitignore, ajoutez :
+Modifiez le fichier `config/config.local.php` avec vos paramètres :
 
-   ```bash
-   # Fichier de configuration local
-   /config/config.local.php
-   ```
+```php
+; Configuration de la base de données
+dbname = "job"
+host = "localhost"
+user = "votre_utilisateur"
+password = "votre_mot_de_passe"
+```
 
-   4. Initialisez la base de données avec le script SQL config/initDB.sql :
+### Accès par défaut
 
-      ```bash
-      mysql -u root -p < config/initDB.sql
-      ```
+- **Email** : admin@job.com
+- **Mot de passe** : !v?ENBDBw4PT
 
-   5. Utilisez un fichier d'exemple pour les autres développeurs : Le fichier config/config.example.php est inclus dans le dépôt et doit contenir une structure de base sans informations sensibles.
-      ```bash
-      ; Fichier config.example.php
-      dbname=
-      host=
-      user=
-      password=
-      ```
+## 🚀 Utilisation
 
-5. Lancer le serveur PHP local sur le dossier /public :
+1. Accédez à `http://localhost:8000`
+2. Connectez-vous avec les identifiants par défaut
+3. Commencez à gérer vos candidatures :
+   - Créez de nouvelles offres
+   - Suivez l'état de vos candidatures
+   - Ajoutez des notes et commentaires
 
-   ```bash
-   php -S localhost:8000 -t public
-   ```
+## 🧪 Tests
 
-6. Accéder à l'application :
-   ```bash
-   http://localhost:8000
-   ```
+Exécution des tests unitaires :
 
-## Exemple de connexion
+```bash
+./vendor/bin/phpunit tests
+```
 
-Vous pouvez utiliser les identifiants suivants pour vous connecter à l'application :
+## 📝 Feuille de route
 
-    * Email : admin@job.com
-    * Mot de passe : !v?ENBDBw4PT (mot de passe déjà haché dans le script d'initialisation)
+- [ ] Système de filtrage et recherche avancée
+- [ ] Authentification JWT
+- [ ] Notifications par email
+- [ ] Export des données (CSV, PDF)
+- [ ] API RESTful
+- [ ] Interface d'administration avancée
 
-## Utilisation
+## 🤝 Contribution
 
-Accédez à la page de connexion avec l'utilisateur par défaut.
-Ajoutez, modifiez ou supprimez des offres d'emploi via l'interface.
-Suivez l'état de vos candidatures et ajoutez des réponses si nécessaire.
+Les contributions sont les bienvenues ! Pour contribuer :
 
-## Améliorations futures
+1. Forkez le projet
+2. Créez une branche (`git checkout -b feature/amelioration`)
+3. Committez vos changements (`git commit -m 'Ajout d'une nouvelle fonctionnalité'`)
+4. Poussez vers la branche (`git push origin feature/amelioration`)
+5. Ouvrez une Pull Request
 
-Ajout d'un système de filtrage et de recherche pour les offres
-Authentification utilisateur améliorée avec JWT ou sessions sécurisées
-Notifications par email pour les nouvelles réponses
-Exportation des données des candidatures en CSV
+## 📄 Licence
 
-## Contribuer
+Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
-Les contributions sont les bienvenues ! Pour proposer des améliorations ou signaler des problèmes, veuillez ouvrir une issue ou une pull request.
+## 📬 Contact
+
+Pour toute question ou suggestion, n'hésitez pas à :
+
+- Ouvrir une issue
+- Contacter l'équipe de développement via le dépôt GitHub
