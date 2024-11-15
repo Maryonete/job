@@ -177,8 +177,9 @@ class OffreRepo extends Offre
             $dateCand = DateTime::createFromFormat('Y-m-d', $data['dateCandidature']);
             $formattedDate = $dateCand->format('d/m/Y');
 
-            $dateReponse = DateTime::createFromFormat('Y-m-d', $data['reponse_at']);
-            $formattedDateReponse = $dateReponse !== false ? $dateReponse->format('d/m/Y') : '';
+            $dateReponse = isset($data['reponse_at']) && $data['reponse_at'] !== null ? DateTime::createFromFormat('Y-m-d', $data['reponse_at']) : null;
+            $formattedDateReponse = $dateReponse !== null ? $dateReponse->format('d/m/Y') : '';
+
 
             $offres[] = [
                 'date' => $formattedDate,
