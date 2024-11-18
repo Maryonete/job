@@ -17,16 +17,15 @@
             <input type="date"
                 class="form-control-plaintext"
                 name="dateCandidature"
-                value="<?= !empty($offre) ? $offre->getDateCandidature()->format('Y-m-d') : '' ?>">
+                value="<?= !empty($offre) ? $offre->getDateCandidature()->format('Y-m-d') : (new DateTime())->format('Y-m-d') ?>">
         </div>
 
         <label for="staticLettreMotivation" class="col-sm-2 col-form-label">Lettre de motivation </label>
 
         <div class="col-sm-2">
             <select name="lettreMotivation">
-                <option value="">--</option>
                 <option value="oui" <?= !empty($offre) && $offre->getLettreMotivation() === 'oui' ? 'selected' : '' ?>>Oui</option>
-                <option value="non" <?= !empty($offre) && $offre->getLettreMotivation() !== 'oui' ? 'selected' : '' ?>>Non</option>
+                <option value="non" <?= empty($offre) || (!empty($offre) && $offre->getLettreMotivation() !== 'oui') ? 'selected' : '' ?>>Non</option>
             </select>
         </div>
     </div>
@@ -34,8 +33,7 @@
         <label for="inputType" class="col-sm-2 col-form-label">Type</label>
         <div class="col-sm-2">
             <select name="type">
-                <option value="">--</option>
-                <option value="Informatique" <?= !empty($offre) && $offre->gettype() === 'Informatique' ? 'selected' : '' ?>>Informatique</option>
+                <option value="Informatique" <?= empty($offre) || (!empty($offre) && $offre->gettype() === 'Informatique') ? 'selected' : '' ?>>Informatique</option>
                 <option value="Autre" <?= !empty($offre) && $offre->gettype() !== 'Informatique' ? 'selected' : '' ?>>Autre</option>
             </select>
         </div>
