@@ -55,11 +55,14 @@ class OffreRepo extends Offre
         } else {
             $_SESSION['error'] = 'lieu manquante';
         }
-
+        // dd($post);
         $offre->setDescription($post['description'] ?? '');
         $offre->setUrl($post['url'] ?? '');
         $offre->setContact($post['contact'] ?? '');
         $offre->setReponse($post['reponse'] ?? '');
+        $offre->setLettreMotivation($post['lettreMotivation'] ?? 'non');
+        $offre->setType($post['type'] ?? 'Informatique');
+
         $offre->setDateReponse(
             !empty($post['reponse_at']) ? DateTime::createFromFormat('Y-m-d', $post['reponse_at']) : null
         );
@@ -73,6 +76,7 @@ class OffreRepo extends Offre
      */
     public static function save(Offre $offre): Offre
     {
+
         $pdo = Database::getPDO();
         if ($offre->getId()) {
             $stmt = $pdo->prepare('UPDATE offre SET
@@ -83,14 +87,16 @@ class OffreRepo extends Offre
                 url=:url,
                 contact=:contact,
                 reponse=:reponse,
-                reponse_at=:reponse_at 
+                reponse_at=:reponse_at,
+                lettreMotivation=:lettreMotivation,
+                type=:type
                 WHERE id = :id');
             $id = $offre->getId();
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         } else {
             $stmt = $pdo->prepare('INSERT INTO offre
-        (dateCandidature, entreprise, lieu, description, url, contact,  reponse, reponse_at)
-        VALUES(:date_candidature, :entreprise, :lieu, :description, :url, :contact,  :reponse, :reponse_at )');
+        (dateCandidature, entreprise, lieu, description, url, contact,  reponse, reponse_at, lettreMotivation, type)
+        VALUES(:date_candidature, :entreprise, :lieu, :description, :url, :contact,  :reponse, :reponse_at, :lettreMotivation, :type )');
         }
         $dateCandidature =  $offre->getDateCandidature();
         if ($dateCandidature instanceof DateTime) {
@@ -103,6 +109,8 @@ class OffreRepo extends Offre
         $contact = $offre->getContact();
         $reponse = $offre->getReponse();
         $dateReponse = $offre->getDateReponse();
+        $lettreMotivation = $offre->getLettreMotivation();
+        $type = $offre->getType();
         if ($dateReponse instanceof DateTime) {
             $dateReponse = $dateReponse->format('Y-m-d'); // Format SQL standard
         }
@@ -115,6 +123,10 @@ class OffreRepo extends Offre
         $stmt->bindParam(':contact', $contact);
         $stmt->bindParam(':reponse', $reponse);
         $stmt->bindParam(':reponse_at', $dateReponse);
+        $stmt->bindParam(':lettreMotivation', $lettreMotivation);
+        $stmt->bindParam(':type', $type);
+
+
         $stmt->execute();
 
 
@@ -166,6 +178,8 @@ class OffreRepo extends Offre
             'contact' => 'string',
             'reponse' => 'string',
             'reponse_at' => 'string',
+            'lettreMotivation' => 'string',
+            'type' => 'string',
         );
         $styles1 = array('font' => 'Arial', 'font-size' => 10, 'font-style' => 'bold', 'fill' => '#eee', 'halign' => 'center', 'border' => 'left,right,top,bottom');
         $datas = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -180,8 +194,6 @@ class OffreRepo extends Offre
             $dateReponse = !empty($data['reponse_at']) ? DateTime::createFromFormat('Y-m-d', $data['reponse_at']) : null;
             $formattedDateReponse = $dateReponse !== null ? $dateReponse->format('d/m/Y') : '';
 
-
-
             $offres[] = [
                 'date' => $formattedDate,
                 'entreprise' => $data['entreprise'],
@@ -191,6 +203,8 @@ class OffreRepo extends Offre
                 'contact' => $data['contact'],
                 'reponse' => $data['reponse'],
                 'reponse_at' => $formattedDateReponse,
+                'lettreMotivation' => $data['lettreMotivation'],
+                'type' => $data['type'],
             ];
         }
         $writer->writeSheet($offres);
@@ -228,6 +242,12 @@ class OffreRepo extends Offre
             $offre->setUrl($data['url'] ?? null);
             $offre->setContact($data['contact'] ?? null);
             $offre->setReponse($data['reponse'] ?? null);
+            $offre->setLettreMotivation($data['lettreMotivation'] ?? 'non');
+            $offre->setType($data['type'] ?? 'Informatique');
+
+
+
+
             $offre->setDateReponse(
                 !empty($data['reponse_at']) ? DateTime::createFromFormat('Y-m-d', $data['reponse_at']) : null
             );
@@ -263,6 +283,9 @@ class OffreRepo extends Offre
         $offre->setUrl($data['url'] ?? null);
         $offre->setContact($data['contact'] ?? null);
         $offre->setReponse($data['reponse'] ?? null);
+        $offre->setLettreMotivation($data['lettreMotivation'] ?? 'non');
+        $offre->setType($data['type'] ?? 'Informatique');
+
         $offre->setDateReponse(
             !empty($data['reponse_at']) ? DateTime::createFromFormat('Y-m-d', $data['reponse_at']) : null
         );

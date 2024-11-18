@@ -1,5 +1,5 @@
 <form action="" method="post">
-    <div class="row g-3 align-items-center mb-5">
+    <div class="row g-3 align-items-center mb-5 mt-2 p-3 bg-body-secondary">
         <!-- Colonne contenant les boutons -->
         <div class="col-12 col-md-8 d-flex flex-column flex-md-row justify-content-between">
             <a href="<?= generateUrl('admin-dashboard') ?>" class="btn btn-primary mb-2 mb-md-0 w-100 w-md-auto me-md-2">Toutes les candidatures</a>

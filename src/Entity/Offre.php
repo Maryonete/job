@@ -16,6 +16,8 @@ class Offre
     private ?string $contact = null;
     private ?string $reponse = null;
     private ?DateTime $reponse_at = null;
+    private ?string $lettreMotivation = null;
+    private ?string $type = null;
 
     public function getId(): ?int
     {
@@ -129,5 +131,45 @@ class Offre
             'reponse' => $this->reponse,
             'reponse_at' => $this->reponse_at,
         ];
+    }
+
+    /**
+     * Get the value of lettreMotivation
+     */
+    public function getLettreMotivation()
+    {
+        return $this->lettreMotivation ? $this->lettreMotivation : 'non';
+    }
+
+    /**
+     * Set the value of lettreMotivation
+     *
+     * @return  self
+     */
+    public function setLettreMotivation($lettreMotivation)
+    {
+        $this->lettreMotivation = $lettreMotivation;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of type
+     */
+    public function getType()
+    {
+        return $this->type ? $this->type : 'Informatique';
+    }
+
+    /**
+     * Set the value of type
+     *
+     * @return  self
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
     }
 }

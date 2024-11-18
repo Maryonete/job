@@ -19,8 +19,27 @@
                 name="dateCandidature"
                 value="<?= !empty($offre) ? $offre->getDateCandidature()->format('Y-m-d') : '' ?>">
         </div>
-    </div>
 
+        <label for="staticLettreMotivation" class="col-sm-2 col-form-label">Lettre de motivation </label>
+
+        <div class="col-sm-2">
+            <select name="lettreMotivation">
+                <option value="">--</option>
+                <option value="oui" <?= !empty($offre) && $offre->getLettreMotivation() === 'oui' ? 'selected' : '' ?>>Oui</option>
+                <option value="non" <?= !empty($offre) && $offre->getLettreMotivation() !== 'oui' ? 'selected' : '' ?>>Non</option>
+            </select>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="inputType" class="col-sm-2 col-form-label">Type</label>
+        <div class="col-sm-2">
+            <select name="type">
+                <option value="">--</option>
+                <option value="Informatique" <?= !empty($offre) && $offre->gettype() === 'Informatique' ? 'selected' : '' ?>>Informatique</option>
+                <option value="Autre" <?= !empty($offre) && $offre->gettype() !== 'Informatique' ? 'selected' : '' ?>>Autre</option>
+            </select>
+        </div>
+    </div>
     <div class="mb-3 row">
         <label for="inputPoste" class="col-sm-2 col-form-label">Poste</label>
         <div class="col-sm-7">
@@ -64,6 +83,8 @@
         </div>
     </div>
 
+
+
     <div class="mb-3 row">
         <label for="staticReponse" class="col-sm-2 col-form-label">Réponse</label>
         <div class="col-sm-2">
@@ -82,6 +103,10 @@
 
         </div>
     </div>
+
+
+
+
     <div class="my-3 row">
         <div class="col-sm-8 text-center">
             <input type="submit" value="Enregistrer" class="btn btn-primary">

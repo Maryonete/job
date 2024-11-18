@@ -27,4 +27,5 @@ CREATE TABLE offre (
     contact VARCHAR(100),
     reponse TEXT,
     reponse_at DATE
+    
 );
