@@ -34,7 +34,7 @@ $router->map('GET', '/initBD', function () {
     redirectTo('admin-dashboard');
 }, 'admin-initBD');
 
-$router->map('GET', '/admin/[encours|refuse|attente:etat]?', function ($etat = null) {
+$router->map('GET', '/admin/[encours|refuse|attente|Autre:etat]?', function ($etat = null) {
     $offreRepro = new OffreRepo;
     $offres = $offreRepro->getAllOffres($etat);
     $offreRepro->getAllOffresXLS();

@@ -17,6 +17,8 @@ if (empty($_SESSION['connecte'])) {
         candidature<?= $s ?> refusée<?= $s ?>
     <?php elseif ($etat === 'attente'): ?>
         candidature<?= $s ?> en attente
+    <?php elseif ($etat === 'Autre'): ?>
+        candidature<?= $s ?> non informatique
     <?php else: ?>
         candidature<?= $s ?> en cours
     <?php endif ?>
@@ -25,7 +27,7 @@ if (empty($_SESSION['connecte'])) {
 </h1>
 
 <?php require "../templates/admin/offre/find.php"; ?>
-<?php if ($count > 1): ?>
+<?php if ($count > 0): ?>
     <table class="table table-striped sortable">
         <thead>
             <tr>
