@@ -156,7 +156,7 @@ class Offre
     /**
      * Get the value of type
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type ? $this->type : 'Informatique';
     }

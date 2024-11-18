@@ -193,7 +193,8 @@ class OffreRepo extends Offre
 
             $dateReponse = !empty($data['reponse_at']) ? DateTime::createFromFormat('Y-m-d', $data['reponse_at']) : null;
             $formattedDateReponse = $dateReponse !== null ? $dateReponse->format('d/m/Y') : '';
-
+            $data['lettreMotivation'] = $data['lettreMotivation'] ? $data['lettreMotivation'] : 'non';
+            $data['type'] = $data['type'] ? $data['type'] : 'Informatique';
             $offres[] = [
                 'date' => $formattedDate,
                 'entreprise' => $data['entreprise'],
