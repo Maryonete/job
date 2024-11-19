@@ -130,6 +130,8 @@ class Offre
             'contact' => $this->contact,
             'reponse' => $this->reponse,
             'reponse_at' => $this->reponse_at,
+            'lettreMotivation' => $this->lettreMotivation,
+            'type' => $this->type,
         ];
     }
 
@@ -166,7 +168,7 @@ class Offre
      *
      * @return  self
      */
-    public function setType($type)
+    public function setType($type): self
     {
         $this->type = $type;
 

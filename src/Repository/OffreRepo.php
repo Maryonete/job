@@ -144,7 +144,7 @@ class OffreRepo extends Offre
     public function getAllOffresByKeyWord(string $q): array
     {
         $pdo = Database::getPDO();
-        $query = "SELECT id FROM offre 
+        $query = "SELECT id FROM offre
             where entreprise like :key
             or lieu like :key
             or contact like :key";
@@ -158,6 +158,7 @@ class OffreRepo extends Offre
         foreach ($listOffres as $offre) {
             $offres[] = $this->getOffreById($offre['id'])->jsonSerialize();
         }
+
         return $offres;
     }
     public function getAllOffresXLS(): void
@@ -248,9 +249,6 @@ class OffreRepo extends Offre
             $offre->setLettreMotivation($data['lettreMotivation'] ?? 'non');
             $offre->setType($data['type'] ?? 'Informatique');
 
-
-
-
             $offre->setDateReponse(
                 !empty($data['reponse_at']) ? DateTime::createFromFormat('Y-m-d', $data['reponse_at']) : null
             );
@@ -286,13 +284,19 @@ class OffreRepo extends Offre
         $offre->setUrl($data['url'] ?? null);
         $offre->setContact($data['contact'] ?? null);
         $offre->setReponse($data['reponse'] ?? null);
-        $offre->setLettreMotivation($data['lettreMotivation'] ?? 'non');
-        $offre->setType($data['type'] ?? 'Informatique');
+
+        if ($data['lettreMotivation'] === '0') {
+            $data['lettreMotivation'] = 'non';
+        }
+        if ($data['type'] === '') {
+            $data['type'] = 'Informatique';
+        }
+        $offre->setLettreMotivation($data['lettreMotivation']);
+        $offre->setType($data['type']);
 
         $offre->setDateReponse(
             !empty($data['reponse_at']) ? DateTime::createFromFormat('Y-m-d', $data['reponse_at']) : null
         );
-
         return $offre;
     }
 }

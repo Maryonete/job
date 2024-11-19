@@ -59,7 +59,11 @@
                 if (offre.reponse === "NON") {
                     row.classList.add("table-dark");
                 }
-                console.log(offre);
+
+                if (offre.lettreMotivation === "oui") {
+                    offre.lettreMotivation = "<i class='fa-solid fa-xmark'  style='color:green; font-size:25pt'></i>";
+                }
+                // console.log(offre);
                 // Ajouter les cellules de la ligne
                 row.innerHTML = `
             <td>${offre.id}</td>
@@ -71,6 +75,8 @@
             <td>${offre.contact}</td>
             <td>${offre.reponse}</td>
             <td>${offre.reponse_at ? new Date(offre.reponse_at.date).toLocaleDateString() : ''}</td>
+            <td>${offre.lettreMotivation}</td>
+            <td>${offre.type}</td>
             <td><a href="/offre/edit/${offre.id}" title="Mise à jour">
                     <i class="fa-solid fa-pen"></i>
                 </a>
