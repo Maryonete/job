@@ -29,11 +29,10 @@ $router->map('GET', '/logout', function () {
     require_once "../templates/logout.php";
 }, 'logout');
 
-$router->map('GET', '/initBD', function () {
+$router->map('GET|POST', '/initBD', function () {
     require_once "../templates/admin/initBD.php";
-    redirectTo('admin-dashboard');
+    // redirectTo('admin-dashboard');
 }, 'admin-initBD');
-
 $router->map('GET', '/admin/[encours|refuse|attente|Autre:etat]?', function ($etat = null) {
     $offreRepro = new OffreRepo;
     $offres = $offreRepro->getAllOffres($etat);

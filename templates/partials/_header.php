@@ -24,9 +24,7 @@ ob_start(); // Commence à tamponner la sortie
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
                         <li>
-                            <a href="<?= generateUrl('admin-initBD') ?>"
-                                class=" nav-link px-2 text-white"
-                                onclick="if(confirm('Voules-vous vraiment réinitialiser la BD ? ')){return true;} else{return false;}">Init BD</a>
+                            <a href="<?= generateUrl('admin-initBD') ?>" class=" nav-link px-2 text-white">Init BD</a>
                         </li>
                     </ul>
                     <div class="text-end">
