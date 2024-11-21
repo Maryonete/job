@@ -75,8 +75,8 @@
             <td>${offre.contact}</td>
             <td>${offre.reponse}</td>
             <td>${offre.reponse_at ? new Date(offre.reponse_at.date).toLocaleDateString() : ''}</td>
-            <td>${offre.lettreMotivation}</td>
-            <td>${offre.type}</td>
+            <td>${offre.lettreMotivation ?? 'non'}</td>
+            <td>${offre.type ?? 'Informatique'}</td>
             <td><a href="/offre/edit/${offre.id}" title="Mise à jour">
                     <i class="fa-solid fa-pen"></i>
                 </a>
