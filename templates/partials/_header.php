@@ -19,21 +19,30 @@ ob_start(); // Commence à tamponner la sortie
 
 <body>
     <?php if (!empty($_SESSION['connecte'])): ?>
-        <header class="p-3 text-bg-primary">
+        <div class="container-fluid text-bg-primary">
             <div class="container">
-                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <header class="d-flex text-bg-primary flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom">
+                    <!-- Colonne pour l'image du logo -->
+                    <div class="col-md-3 text-start">
+                        <img src="/assets/flamant.png" alt="logo" width="60px">
+                    </div>
+
+                    <!-- Menu de navigation centré -->
+                    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                         <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
                         <li>
-                            <a href="<?= generateUrl('admin-initBD') ?>" class=" nav-link px-2 text-white">Init BD</a>
+                            <a href="<?= generateUrl('admin-initBD') ?>" class="nav-link px-2 text-white">Init BD</a>
                         </li>
                     </ul>
-                    <div class="text-end">
+
+                    <!-- Colonne pour le bouton de déconnexion -->
+                    <div class="col-md-3 text-end">
                         <a href="/logout" class="btn btn-outline-light me-2">Déconnexion</a>
                     </div>
-                </div>
+                </header>
             </div>
-        </header>
+        </div>
+
     <?php endif ?>
     <div class="container bd-gutter mt-3 my-md-4 bd-layout">
 
