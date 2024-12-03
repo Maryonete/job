@@ -148,8 +148,8 @@ class OffreRepo extends Offre
             where entreprise like :key
             or lieu like :key
             or contact like :key";
-
         $statement = $pdo->prepare($query);
+
         $keyword = "%$q%";
         $statement->bindParam('key', $keyword, PDO::PARAM_STR);
         $statement->execute();

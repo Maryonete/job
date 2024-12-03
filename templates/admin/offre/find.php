@@ -24,7 +24,8 @@
         const tableBody = document.querySelector('table tbody');
 
         inputFind.addEventListener("keyup", async (e) => {
-            const searchValue = e.target.value;
+            let searchValue = e.target.value;
+            searchValue = searchValue.trim();
             try {
                 const response = await fetch(`/api/admin/find/${encodeURIComponent(searchValue)}`);
                 if (!response.ok) {

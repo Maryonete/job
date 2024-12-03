@@ -6,15 +6,11 @@ use App\Repository\OffreRepo;
 
 require "../vendor/autoload.php";
 
-
-
-
 // Initialisation du routeur
 $router = new AltoRouter();
 $router->setBasePath('');
 $api = false;
 
-// echo (password_hash("!v?ENBDBw4PT", PASSWORD_DEFAULT));
 
 // Routes API
 $router->map('GET', '/api/admin/find/[*:q]', function ($q) {
@@ -31,9 +27,8 @@ $router->map('GET', '/logout', function () {
 
 $router->map('GET|POST', '/initBD', function () {
     require_once "../templates/admin/initBD.php";
-    // redirectTo('admin-dashboard');
 }, 'admin-initBD');
-$router->map('GET', '/admin/[encours|refuse|attente|Autre:etat]?', function ($etat = null) {
+$router->map('GET|POST', '/admin/[encours|refuse|attente|Autre:etat]?', function ($etat = null) {
     $offreRepro = new OffreRepo;
     $offres = $offreRepro->getAllOffres($etat);
     $offreRepro->getAllOffresXLS();
