@@ -10,7 +10,7 @@ require "../vendor/autoload.php";
 $router = new AltoRouter();
 $router->setBasePath('');
 $api = false;
-
+$title = "";
 
 // Routes API
 $router->map('GET', '/api/admin/find/[*:q]', function ($q) {
@@ -21,6 +21,10 @@ $router->map('GET', '/api/admin/find/[*:q]', function ($q) {
 $router->map('GET', '/', function () {
     require_once "../templates/login.php";
 }, 'login');
+$router->map('GET', '/choice', function () {
+
+    require_once "../templates/choice.php";
+}, 'choice');
 $router->map('GET', '/logout', function () {
     require_once "../templates/logout.php";
 }, 'logout');
@@ -97,6 +101,10 @@ if ($match === false) {
         header('Content-Type: application/json; charset=utf-8');
         $api = true;
     } else {
+
+        if ($match['name'] === 'choice') {
+            $title = "My lover choice";
+        }
         // Charger le header normal si ce n'est pas une API
         require_once "../templates/partials/_header.php";
     }
