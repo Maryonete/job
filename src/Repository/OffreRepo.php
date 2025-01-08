@@ -95,7 +95,7 @@ class OffreRepo extends Offre
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         } else {
             $stmt = $pdo->prepare('INSERT INTO offre
-        (dateCandidature, entreprise, lieu, description, url, contact,  reponse, reponse_at, lettreMotivation, type)
+        (date_candidature, entreprise, lieu, description, url, contact,  reponse, reponse_at, lettre_motivation, type)
         VALUES(:date_candidature, :entreprise, :lieu, :description, :url, :contact,  :reponse, :reponse_at, :lettreMotivation, :type )');
         }
         $dateCandidature =  $offre->getDateCandidature();
@@ -189,13 +189,21 @@ class OffreRepo extends Offre
         $writer->writeSheetHeader('Sheet1', $header, $styles1);
         $offres = [];
         foreach ($datas as $data) {
-            $dateCand = DateTime::createFromFormat('Y-m-d', $data['dateCandidature']);
-            $formattedDate = $dateCand->format('d/m/Y');
+            // Créer l'objet DateTime pour la date de candidature
+            $dateCand = DateTime::createFromFormat('Y-m-d', $data['date_candidature']);
+            // Vérifier si la création a réussi
+            $formattedDate = $dateCand !== false ? $dateCand->format('d/m/Y') : '';
 
+            // Créer l'objet DateTime pour la date de réponse
             $dateReponse = !empty($data['reponse_at']) ? DateTime::createFromFormat('Y-m-d', $data['reponse_at']) : null;
-            $formattedDateReponse = $dateReponse !== null ? $dateReponse->format('d/m/Y') : '';
-            $data['lettreMotivation'] = $data['lettreMotivation'] ? $data['lettreMotivation'] : 'non';
+            // Vérifier si la date de réponse est valide
+            $formattedDateReponse = $dateReponse !== null && $dateReponse !== false ? $dateReponse->format('d/m/Y') : '';
+
+            // Traitement des autres données
+            $data['lettre_motivation'] = $data['lettre_motivation'] ? $data['lettre_motivation'] : 'non';
             $data['type'] = $data['type'] ? $data['type'] : 'Informatique';
+
+            // Ajouter les données formatées au tableau $offres
             $offres[] = [
                 'date' => $formattedDate,
                 'entreprise' => $data['entreprise'],
@@ -205,10 +213,11 @@ class OffreRepo extends Offre
                 'contact' => $data['contact'],
                 'reponse' => $data['reponse'],
                 'reponse_at' => $formattedDateReponse,
-                'lettreMotivation' => $data['lettreMotivation'],
+                'lettre_motivation' => $data['lettre_motivation'],
                 'type' => $data['type'],
             ];
         }
+
         $writer->writeSheet($offres);
         $writer->writeToFile('recap.xlsx');
     }
@@ -228,7 +237,7 @@ class OffreRepo extends Offre
         $query .= !empty($etat) && $etat === "Autre" ? " WHERE type = 'Autre' " : '';
 
 
-        $query .= "ORDER BY dateCandidature DESC";
+        $query .= "ORDER BY date_candidature DESC";
         $statement = $pdo->prepare($query);
         $statement->execute();
         $offresData = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -237,9 +246,11 @@ class OffreRepo extends Offre
             $offre = new Offre();
             $offre->setId($data['id'] ?? null);
             // Hydratation manuelle
-            $offre->setDateCandidature(
-                !empty($data['dateCandidature']) ? DateTime::createFromFormat('Y-m-d', $data['dateCandidature']) : null
-            );
+            // dd($data['date_candidature']);
+            $dateCandidature = DateTime::createFromFormat('Y-m-d H:i:s', $data['date_candidature']);
+            $offre->setDateCandidature($dateCandidature !== false ? $dateCandidature : null);
+
+
             $offre->setEntreprise($data['entreprise'] ?? null);
             $offre->setLieu($data['lieu'] ?? null);
             $offre->setDescription($data['description'] ?? null);
@@ -249,9 +260,11 @@ class OffreRepo extends Offre
             $offre->setLettreMotivation($data['lettreMotivation'] ?? 'non');
             $offre->setType($data['type'] ?? 'Informatique');
 
-            $offre->setDateReponse(
-                !empty($data['reponse_at']) ? DateTime::createFromFormat('Y-m-d', $data['reponse_at']) : null
-            );
+            $dateReponse = DateTime::createFromFormat('Y-m-d H:i:s', $data['reponse_at']);
+
+
+            $offre->setDateReponse($dateReponse !== false ? $dateReponse : null);
+
 
             $offres[] = $offre;
         }
@@ -276,7 +289,7 @@ class OffreRepo extends Offre
         $offre->setId($data['id'] ?? null);
         // Hydratation manuelle
         $offre->setDateCandidature(
-            !empty($data['dateCandidature']) ? DateTime::createFromFormat('Y-m-d', $data['dateCandidature']) : null
+            !empty($data['date_candidature']) ? DateTime::createFromFormat('Y-m-d H:i:s', $data['date_candidature']) : null
         );
         $offre->setEntreprise($data['entreprise'] ?? null);
         $offre->setLieu($data['lieu'] ?? null);
@@ -295,7 +308,7 @@ class OffreRepo extends Offre
         $offre->setType($data['type']);
 
         $offre->setDateReponse(
-            !empty($data['reponse_at']) ? DateTime::createFromFormat('Y-m-d', $data['reponse_at']) : null
+            !empty($data['reponse_at']) ? DateTime::createFromFormat('Y-m-d H:i:s', $data['reponse_at']) : null
         );
         return $offre;
     }

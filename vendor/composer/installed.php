@@ -3,7 +3,7 @@
         'name' => 'mauri/emploi',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '5b60ce86bf4e08d499f6c37b7912865c113de56c',
+        'reference' => '147e07608a8deed2412b27054b460b1ae38bf878',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -58,7 +58,7 @@
         'mauri/emploi' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '5b60ce86bf4e08d499f6c37b7912865c113de56c',
+            'reference' => '147e07608a8deed2412b27054b460b1ae38bf878',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

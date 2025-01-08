@@ -46,10 +46,11 @@ if (empty($_SESSION['connecte'])) {
         </thead>
         <tbody>
             <?php foreach ($offres as $offre): ?>
+
                 <?php $url = !empty($offre->getUrl()) ? "<a href={$offre->getUrl()} target='_blank'><i class='fa-solid fa-link'></i></a>" : "" ?>
                 <tr <?= $offre->getReponse() === 'NON' ? " class='table-dark'" : ($offre->getReponse() === 'ATT' ? " class='table-success'" : '') ?>>
                     <td><?= $offre->getId() ?></td>
-                    <td><?= $offre->getDateCandidature()->format('d/m/Y') ?></td>
+                    <td><?= $offre->getDateCandidature()?->format('d/m/Y') ?></td>
                     <td><?= $offre->getEntreprise() ?></td>
                     <td><?= $offre->getLieu() ?></td>
                     <td><?= $offre->getDescription() ?></td>
