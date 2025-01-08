@@ -260,7 +260,8 @@ class OffreRepo extends Offre
             $offre->setLettreMotivation($data['lettreMotivation'] ?? 'non');
             $offre->setType($data['type'] ?? 'Informatique');
 
-            $dateReponse = DateTime::createFromFormat('Y-m-d H:i:s', $data['reponse_at']);
+            $dateReponse = !empty($data['reponse_at']) ? DateTime::createFromFormat('Y-m-d H:i:s', $data['reponse_at']) : null;
+
 
 
             $offre->setDateReponse($dateReponse !== false ? $dateReponse : null);
