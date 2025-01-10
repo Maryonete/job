@@ -95,8 +95,8 @@
             <select name="reponse">
                 <option value="">--</option>
                 <option value="NON" <?= !empty($offre) && $offre->getReponse() === 'NON' ? 'selected' : '' ?>>NON</option>
-                <option value="ATT">En attente</option>
-                <option value="cat">Pas encore arrive</option>
+                <option value="ATT" <?= !empty($offre) && $offre->getReponse() === 'ATT' ? 'selected' : '' ?>>En attente</option>
+                <option value="cat" <?= !empty($offre) && $offre->getReponse() === 'cat' ? 'selected' : '' ?>>Pas encore arrive</option>
             </select>
 
         </div>

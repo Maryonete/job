@@ -80,7 +80,7 @@ class OffreRepo extends Offre
         $pdo = Database::getPDO();
         if ($offre->getId()) {
             $stmt = $pdo->prepare('UPDATE offre SET
-                dateCandidature=:date_candidature,
+                date_candidature=:date_candidature,
                 entreprise=:entreprise,
                 lieu=:lieu,
                 description=:description,
@@ -88,7 +88,7 @@ class OffreRepo extends Offre
                 contact=:contact,
                 reponse=:reponse,
                 reponse_at=:reponse_at,
-                lettreMotivation=:lettreMotivation,
+                lettre_motivation=:lettreMotivation,
                 type=:type
                 WHERE id = :id');
             $id = $offre->getId();
@@ -126,7 +126,7 @@ class OffreRepo extends Offre
         $stmt->bindParam(':lettreMotivation', $lettreMotivation);
         $stmt->bindParam(':type', $type);
 
-
+        // dd($lettreMotivation);
         $stmt->execute();
 
 
@@ -257,7 +257,7 @@ class OffreRepo extends Offre
             $offre->setUrl($data['url'] ?? null);
             $offre->setContact($data['contact'] ?? null);
             $offre->setReponse($data['reponse'] ?? null);
-            $offre->setLettreMotivation($data['lettreMotivation'] ?? 'non');
+            $offre->setLettreMotivation($data['lettre_motivation'] ?? 'non');
             $offre->setType($data['type'] ?? 'Informatique');
 
             $dateReponse = !empty($data['reponse_at']) ? DateTime::createFromFormat('Y-m-d H:i:s', $data['reponse_at']) : null;
@@ -299,13 +299,13 @@ class OffreRepo extends Offre
         $offre->setContact($data['contact'] ?? null);
         $offre->setReponse($data['reponse'] ?? null);
 
-        if ($data['lettreMotivation'] === '0') {
-            $data['lettreMotivation'] = 'non';
+        if ($data['lettre_motivation'] === '0') {
+            $data['lettre_motivation'] = 'non';
         }
         if ($data['type'] === '') {
             $data['type'] = 'Informatique';
         }
-        $offre->setLettreMotivation($data['lettreMotivation']);
+        $offre->setLettreMotivation($data['lettre_motivation']);
         $offre->setType($data['type']);
 
         $offre->setDateReponse(

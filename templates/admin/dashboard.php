@@ -56,7 +56,7 @@ if (empty($_SESSION['connecte'])) {
                     <td><?= $offre->getDescription() ?></td>
                     <td><?= $url ?></td>
                     <td><?= $offre->getContact() ?></td>
-                    <td><?= $offre->getReponse() ?></td>
+                    <td><?= $offre->getReponse() ?> </td>
 
                     <td><?= !empty($offre->getDateReponse()) ? $offre->getDateReponse()->format('d/m/Y') : '' ?></td>
                     <td class="text-center"><?= $offre->getLettreMotivation() === 'non' ? '' : "<i class='fa-solid fa-xmark'  style='color:green; font-size:25pt'></i>"  ?></td>
