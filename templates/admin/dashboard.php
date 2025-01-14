@@ -61,12 +61,12 @@ if (empty($_SESSION['connecte'])) {
                         <?= $offre->getReponse() ?>
                         <?= !empty($offre->getDateReponse()) ? $offre->getDateReponse()->format('d/m/Y') : '' ?></td>
                     <td class="text-center">
-                        <?= $offre->getRelance() === 'non' ? '' : "<i class='fa-solid fa-check'  style='color:green; font-size:25pt'></i>"  ?>
+                        <?= $offre->getRelance() === 'oui' ?  "<i class='fa-solid fa-check'  style='color:green; font-size:25pt'></i>" : '' ?>
 
                         <?= !empty($offre->getRelanceAt()) ? $offre->getRelanceAt()->format('d/m/Y') : '' ?></td>
 
 
-                    <td><?= $offre->gettype() === 'Informatique' ? '<i class="fa-solid fa-computer"></i>' : '<i class="fa-regular fa-face-frown-open"></i>' ?></td>
+                    <td class="align-middle"><?= $offre->gettype() === 'Informatique' ? '<i class="fa-solid fa-computer"></i>' : '<i class="fa-regular fa-face-frown-open"  style="color:red"></i>' ?></td>
                     <td><a href="<?= generateUrl('offre_edit', ['id' => $offre->getId()]) ?>" title="Mise à jour">
                             <i class="fa-solid fa-pen"></i>
                         </a>
