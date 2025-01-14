@@ -216,7 +216,7 @@ class OffreRepo extends Offre
             $formattedDateReponse = $dateReponse !== null && $dateReponse !== false ? $dateReponse->format('d/m/Y') : '';
 
 
-            $relanceAt = DateTime::createFromFormat('Y-m-d', $data['relanceAt']);
+            $relanceAt = !empty($data['relanceAt']) ? DateTime::createFromFormat('Y-m-d', $data['relanceAt']) : null;
             $formattedRelanceAt = $relanceAt !== false ? $relanceAt->format('d/m/Y') : '';
 
             // Traitement des autres données
