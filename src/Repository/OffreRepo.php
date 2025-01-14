@@ -217,7 +217,7 @@ class OffreRepo extends Offre
 
 
             $relanceAt = !empty($data['relanceAt']) ? DateTime::createFromFormat('Y-m-d', $data['relanceAt']) : null;
-            $formattedRelanceAt = $relanceAt !== false ? $relanceAt->format('d/m/Y') : '';
+            $formattedRelanceAt = $relanceAt !== null && $relanceAt !== false ? $relanceAt->format('d/m/Y') : '';
 
             // Traitement des autres données
             $data['lettre_motivation'] = $data['lettre_motivation'] ? $data['lettre_motivation'] : 'non';
