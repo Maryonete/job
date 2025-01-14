@@ -57,9 +57,12 @@ if (empty($_SESSION['connecte'])) {
                     <td><?= $url ?></td>
                     <td><?= $offre->getContact() ?></td>
                     <td class="text-center"><?= $offre->getLettreMotivation() === 'non' ? '' : "<i class='fa-solid fa-xmark'  style='color:green; font-size:25pt'></i>"  ?></td>
-                    <td><?= $offre->getReponse() ?>
+                    <td class="text-center">
+                        <?= $offre->getReponse() ?>
                         <?= !empty($offre->getDateReponse()) ? $offre->getDateReponse()->format('d/m/Y') : '' ?></td>
-                    <td><?= $offre->getRelance() ?>
+                    <td class="text-center">
+                        <?= $offre->getRelance() === 'non' ? '' : "<i class='fa-solid fa-check'  style='color:green; font-size:25pt'></i>"  ?>
+
                         <?= !empty($offre->getRelanceAt()) ? $offre->getRelanceAt()->format('d/m/Y') : '' ?></td>
 
 
