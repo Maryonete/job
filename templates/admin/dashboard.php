@@ -38,8 +38,9 @@ if (empty($_SESSION['connecte'])) {
                 <th scope="col">Poste</th>
                 <th scope="col">URL</th>
                 <th scope="col">contact</th>
-                <th scope="col">réponse</th>
                 <th scope="col">Lettre motivation</th>
+                <th scope="col">réponse</th>
+                <th scope="col">Relance</th>
                 <th scope="col">Type</th>
             </tr>
         </thead>
@@ -55,9 +56,12 @@ if (empty($_SESSION['connecte'])) {
                     <td><?= $offre->getDescription() ?></td>
                     <td><?= $url ?></td>
                     <td><?= $offre->getContact() ?></td>
+                    <td class="text-center"><?= $offre->getLettreMotivation() === 'non' ? '' : "<i class='fa-solid fa-xmark'  style='color:green; font-size:25pt'></i>"  ?></td>
                     <td><?= $offre->getReponse() ?>
                         <?= !empty($offre->getDateReponse()) ? $offre->getDateReponse()->format('d/m/Y') : '' ?></td>
-                    <td class="text-center"><?= $offre->getLettreMotivation() === 'non' ? '' : "<i class='fa-solid fa-xmark'  style='color:green; font-size:25pt'></i>"  ?></td>
+                    <td><?= $offre->getRelance() ?>
+                        <?= !empty($offre->getRelanceAt()) ? $offre->getRelanceAt()->format('d/m/Y') : '' ?></td>
+
 
                     <td><?= $offre->gettype() === 'Informatique' ? '<i class="fa-solid fa-computer"></i>' : '<i class="fa-regular fa-face-frown-open"></i>' ?></td>
                     <td><a href="<?= generateUrl('offre_edit', ['id' => $offre->getId()]) ?>" title="Mise à jour">

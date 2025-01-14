@@ -19,6 +19,9 @@ class Offre
     private ?string $lettreMotivation = null;
     private ?string $type = null;
 
+    private ?string $relance = 'non';
+    private ?Datetime $relanceAt = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -132,6 +135,8 @@ class Offre
             'reponse_at' => $this->reponse_at,
             'lettreMotivation' => $this->lettreMotivation,
             'type' => $this->type,
+            'relance' => $this->relance,
+            'relanceAt' => $this->relanceAt,
         ];
     }
 
@@ -171,6 +176,46 @@ class Offre
     public function setType($type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of relance
+     */
+    public function getRelance()
+    {
+        return $this->relance;
+    }
+
+    /**
+     * Set the value of relance
+     *
+     * @return  self
+     */
+    public function setRelance($relance)
+    {
+        $this->relance = $relance;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of relanceAt
+     */
+    public function getRelanceAt()
+    {
+        return $this->relanceAt;
+    }
+
+    /**
+     * Set the value of relanceAt
+     *
+     * @return  self
+     */
+    public function setRelanceAt($relanceAt)
+    {
+        $this->relanceAt = $relanceAt;
 
         return $this;
     }

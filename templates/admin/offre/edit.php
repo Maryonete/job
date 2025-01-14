@@ -86,20 +86,37 @@
     <div class="mb-3 row">
         <label for="staticReponse" class="col-sm-2 col-form-label">Réponse</label>
         <div class="col-sm-2">
-            <input type="date"
-                class="form-control-plaintext"
-                name="reponse_at"
-                value="<?= !empty($offre) && !empty($offre->getDateReponse()) ? $offre->getDateReponse()->format('Y-m-d') : '' ?>">
-        </div>
-        <div class="col-sm-2">
             <select name="reponse">
                 <option value="">--</option>
                 <option value="NON" <?= !empty($offre) && $offre->getReponse() === 'NON' ? 'selected' : '' ?>>NON</option>
                 <option value="ATT" <?= !empty($offre) && $offre->getReponse() === 'ATT' ? 'selected' : '' ?>>En attente</option>
                 <option value="cat" <?= !empty($offre) && $offre->getReponse() === 'cat' ? 'selected' : '' ?>>Pas encore arrive</option>
             </select>
-
         </div>
+        <div class="col-sm-2">
+            <input type="date"
+                class="form-control-plaintext"
+                name="reponse_at"
+                value="<?= !empty($offre) && !empty($offre->getDateReponse()) ? $offre->getDateReponse()->format('Y-m-d') : '' ?>">
+        </div>
+
+    </div>
+
+    <div class="mb-3 row">
+        <label for="staticRelance" class="col-sm-2 col-form-label">Relance</label>
+        <div class="col-sm-2">
+            <select name="relance">
+                <option value="non" <?= !empty($offre) && $offre->getRelance() === 'non' ? 'selected' : '' ?>>non</option>
+                <option value="oui" <?= !empty($offre) && $offre->getRelance() === 'oui' ? 'selected' : '' ?>>oui</option>
+            </select>
+        </div>
+        <div class="col-sm-2">
+            <input type="date"
+                class="form-control-plaintext"
+                name="relanceAt"
+                value="<?= !empty($offre) && !empty($offre->getRelanceAt()) ? $offre->getRelanceAt()->format('Y-m-d') : '' ?>">
+        </div>
+
     </div>
 
 
